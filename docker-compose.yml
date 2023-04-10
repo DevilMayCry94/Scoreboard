@@ -16,19 +16,15 @@ services:
     networks:
       - scoreboard
 
-  db:
-    image: mysql:5.7
-    container_name: scoreboard-db
-    restart: unless-stopped
-    volumes:
-      - ./docker/mysql:/docker-entrypoint-initdb.d
-    environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - 3306:3306
-    networks:
-      - scoreboard
+  redis:
+      image: redis
+      container_name: redis
+      volumes:
+          - ./docker/redis:/data
+      ports:
+          - 6379:6379
+      networks:
+          - scoreboard
 
   nginx:
     image: nginx:alpine
